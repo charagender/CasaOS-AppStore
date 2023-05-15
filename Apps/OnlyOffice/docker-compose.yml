@@ -243,7 +243,7 @@ x-casaos:
     - amd64
     - arm
     - arm64
-  main: mineos
+  main: onlyoffice-documentserver
   author: Chàra Rose
   category: Cloud
   description:

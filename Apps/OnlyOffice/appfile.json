@@ -1,0 +1,312 @@
+{
+    "version": "1.0",
+    "title": "OnlyOffice Document Server",
+    "name": "onlyoffice-documentserver",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OnlyOffice/icon.png",
+    "tagline": "Easy to use document server for the OnlyOffice office suite.",
+    "overview": "ONLYOFFICE Document Server is an online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats .docx, .xlsx, .pptx and enabling collaborative editing in real time.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OnlyOffice/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OnlyOffice/screenshot-1.png"
+    ],
+    "category": [
+        "Cloud"
+    ],
+    "developer": {
+        "name": "ONLYOFFICE",
+        "website": "https://www.onlyoffice.com/",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "Chàra Rose",
+        "website": "https://chara.cloud",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "support": "https://discord.gg/knqAbbBbeX",
+    "website": "https://www.casaos.io",
+    "container": {
+        "image": "onlyoffice/documentserver",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "8090",
+            "path": "/"
+        },
+        "envs": [
+            {
+                "key": "JWT_IN_BODY",
+                "value": "false",
+                "configurable": "yes",
+                "description": "Set to \"true\" (without quotes) to enable JSON Web Token validation."
+            },
+            {
+                "key": "DB_TYPE",
+                "value": "postgres",
+                "configurable": "yes",
+                "description": "The database type. Supported values are `postgres`, `mariadb` or `mysql`. Defaults to `postgres`."
+            },
+            {
+                "key": "DB_HOST",
+                "value": "onlyoffice-postgresql",
+                "configurable": "yes",
+                "description": "The IP address or the name of the host where the database server is running."
+            },
+            {
+                "key": "DB_PORT",
+                "value": "5432",
+                "configurable": "yes",
+                "description": "The database server port number."
+            },
+            {
+                "key": "DB_NAME",
+                "value": "onlyoffice",
+                "configurable": "yes",
+                "description": "The name of a database to be created on the image startup."
+            },
+            {
+                "key": "DB_USER",
+                "value": "onlyoffice",
+                "configurable": "yes",
+                "description": "The new user name with superuser permissions for the database account."
+            },
+            {
+                "key": "AMQP_URI",
+                "value": "amqp://guest:guest@onlyoffice-rabbitmq",
+                "configurable": "yes",
+                "description": "The AMQP URI to connect to the message broker server."
+            },
+            {
+                "key": "JWT_ENABLED",
+                "value": "true",
+                "configurable": "yes",
+                "description": "Specifies the enabling the JSON web token validation by ONLYOFFICE Docs. Defaults to `true`."
+            },
+            {
+                "key": "JWT_SECRET",
+                "value": "secret",
+                "configurable": "yes",
+                "description": "Defines the secret key to validate the JSON web token in the request to ONLYOFFICE Docs. Defaults to random value."
+            },
+            {
+                "key": "JWT_HEADER",
+                "value": "Authorization",
+                "configurable": "yes",
+                "description": "Defines the HTTP header that will be used to send the JSON web token. Defaults to `Authorization`"
+            },
+            {
+                "key": "ONLYOFFICE_HTTPS_HSTS_ENABLED",
+                "value": "true",
+                "configurable": "yes",
+                "description": "Advanced configuration option for turning off the HSTS configuration. Applicable only when SSL is in use. Defaults to `true`."
+            },
+            {
+                "key": "ONLYOFFICE_HTTPS_HSTS_MAXAGE",
+                "value": "31536000",
+                "configurable": "yes",
+                "description": "Advanced configuration option for setting the HSTS max-age in the onlyoffice NGINX vHost configuration. Applicable only when SSL is in use. Defaults to `31536000`."
+            },
+            {
+                "key": "SSL_CERTIFICATE_PATH",
+                "value": "/var/www/onlyoffice/Data/certs/tls.crt",
+                "configurable": "yes",
+                "description": "The path to the SSL certificate to use. Defaults to `/var/www/onlyoffice/Data/certs/tls.crt"
+            },
+            {
+                "key": "SSL_KEY_PATH",
+                "value": "/var/www/onlyoffice/Data/certs/tls.key",
+                "configurable": "yes",
+                "description": "The path to the SSL certificate private key. Defaults to `/var/www/onlyoffice/Data/certs/tls.key`."
+            },
+            {
+                "key": "SSL_DHPARAM_PATH",
+                "value": "/var/www/onlyoffice/Data/certs/dhparam.pem",
+                "configurable": "yes",
+                "description": "The path to the Diffie-Hellman parameter. Defaults to `/var/www/onlyoffice/Data/certs/dhparam.pem`."
+            },
+            {
+                "key": "SSL_VERIFY_CLIENT",
+                "value": "false",
+                "configurable": "yes",
+                "description": "Enable verification of client certificates using the `CA_CERTIFICATES_PATH` file. Defaults to `false`."
+            },
+            {
+                "key": "DB_PWD",
+                "configurable": "yes",
+                "description": "The password set for the database account."
+            },
+            {
+                "key": "AMQP_TYPE",
+                "value": "rabbitmq",
+                "configurable": "yes",
+                "description": "The message broker type. Supported values are `rabbitmq` or `activemq`. Defaults to `rabbitmq`."
+            },
+            {
+                "key": "REDIS_SERVER_HOST",
+                "configurable": "yes",
+                "description": "The IP address or the name of the host where the Redis server is running."
+            },
+            {
+                "key": "REDIS_SERVER_PORT",
+                "configurable": "yes",
+                "description": "The Redis server port number."
+            },
+            {
+                "key": "NGINX_WORKER_PROCESSES",
+                "configurable": "yes",
+                "description": "Defines the number of NGINX worker processes."
+            },
+            {
+                "key": "SECURE_LINK_SECRET",
+                "value": "random string",
+                "configurable": "yes",
+                "description": "Defines secret for the nginx config directive secure_link_md5. Defaults to `random string`."
+            },
+            {
+                "key": "WOPI_ENABLED",
+                "value": "false",
+                "configurable": "yes",
+                "description": "Specifies the enabling the wopi handlers. Defaults to `false`."
+            },
+            {
+                "key": "USE_UNAUTHORIZED_STORAGE",
+                "value": "false",
+                "configurable": "yes",
+                "description": "Set to `true` if using self-signed certificates for your storage server, e.g. Nextcloud. Defaults to `false`."
+            },
+            {
+                "key": "GENERATE_FONTS",
+                "value": "true",
+                "configurable": "yes",
+                "description": "When `true`, regenerates fonts list and the fonts thumbnails etc. at each start. Defaults to `true`."
+            },
+            {
+                "key": "METRICS_ENABLED",
+                "value": "false",
+                "configurable": "yes",
+                "description": "Specifies the enabling StatsD for ONLYOFFICE Docs. Defaults to `false`."
+            },
+            {
+                "key": "METRICS_HOST",
+                "value": "localhost",
+                "configurable": "yes",
+                "description": "Defines StatsD listening host. Defaults to `localhost`."
+            },
+            {
+                "key": "METRICS_PORT",
+                "value": "8125",
+                "configurable": "yes",
+                "description": "Defines StatsD listening port. Defaults to `8125`."
+            },
+            {
+                "key": "METRICS_PREFIX",
+                "value": "ds",
+                "configurable": "yes",
+                "description": "Defines StatsD metrics prefix for backend services. Defaults to `ds`."
+            },
+            {
+                "key": "LETS_ENCRYPT_DOMAIN",
+                "configurable": "yes",
+                "description": "Defines the domain for Let's Encrypt certificate."
+            },
+            {
+                "key": "LETS_ENCRYPT_MAIL",
+                "configurable": "yes",
+                "description": "Defines the domain administrator mail address for Let's Encrypt certificate."
+            }
+        ],
+        "ports": [
+            {
+                "container": "80",
+                "host": "8090",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            },
+            {
+                "container": "443",
+                "host": "8091",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "WebUI HTTPS Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/www/onlyoffice/Data",
+                "host": "/app/onlyoffice/DocumentServer/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OnlyOffice Data directory."
+            },
+            {
+                "container": "/var/log/onlyoffice",
+                "host": "/app/onlyoffice/DocumentServer/logs",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OnlyOffice Logs directory."
+            },
+            {
+                "container": "/var/lib/onlyoffice",
+                "host": "/app/onlyoffice/DocumentServer/lib",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OnlyOffice Lib directory."
+            },
+            {
+                "container": "/var/lib/postgresql",
+                "host": "/app/onlyoffice/DocumentServer/db",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OnlyOffice DB directory."
+            },
+            {
+                "container": "/var/lib/onlyoffice/documentserver/App_Data/cache/files",
+                "host": "/app/onlyoffice/DocumentServer/lib/documentserver/App_Data/cache/files",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OnlyOffice Cache directory."
+            },
+            {
+                "container": "/var/www/onlyoffice/documentserver-example/public/files",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OnlyOffice Files directory."
+            },
+            {
+                "container": "/usr/share/fonts",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Fonts directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 2048,
+            "min_storage": 4096
+        },
+        "restart_policy": "always",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {}
+}
