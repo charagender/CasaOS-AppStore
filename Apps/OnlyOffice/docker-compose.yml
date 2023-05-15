@@ -3,9 +3,8 @@ name: onlyoffice-documentserver
 
 services:
   onlyoffice-documentserver:
-    build:
-      context: .
     container_name: onlyoffice-documentserver
+    image: onlyoffice/documentserver
     depends_on:
       - onlyoffice-postgresql
       - onlyoffice-rabbitmq
