@@ -1,6 +1,6 @@
 name: onlyoffice-documentserver
 # Base file from: https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/docker-compose.yml
-
+version: '2'
 services:
   onlyoffice-documentserver:
     container_name: onlyoffice-documentserver
@@ -26,13 +26,24 @@ services:
     restart: always
     stop_grace_period: 60s
     volumes:
-       - /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data
-       - /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice
-       - /app/onlyoffice/DocumentServer/lib:/var/lib/onlyoffice
-       - /app/onlyoffice/DocumentServer/db:/var/lib/postgresql
-       - /app/onlyoffice/DocumentServer/lib/documentserver/App_Data/cache/files:/var/lib/onlyoffice/documentserver/App_Data/cache/files
-       - /var/www/onlyoffice/documentserver-example/public/files
-       - /usr/share/fonts
+    - type: bind
+      source: /DATA/AppData/onlyoffice/DocumentServer/data
+      target: /var/www/onlyoffice/Data
+    - type: bind
+      source: /DATA/AppData/onlyoffice/DocumentServer/logs
+      target: /var/log/onlyoffice
+    - type: bind
+      source: /DATA/AppData/onlyoffice/DocumentServer/lib
+      target: /var/lib/onlyoffice
+    - type: bind
+      source: /DATA/AppData/onlyoffice/DocumentServer/db
+      target: /var/lib/postgresql
+    - type: bind
+      source: /DATA/AppData/onlyoffice/DocumentServer/lib/documentserver/App_Data/cache/files
+      target: /var/lib/onlyoffice/documentserver/App_Data/cache/files
+    - type: bind
+      source: /usr/share/fonts
+      target: /usr/share/fonts
        
   onlyoffice-rabbitmq:
     container_name: onlyoffice-rabbitmq
@@ -52,7 +63,9 @@ services:
     expose:
       - '5432'
     volumes:
-      - postgresql_data:/var/lib/postgresql
+    - type: volume
+      source: postgresql_data
+      target: /var/lib/postgresql
 
     x-casaos:
       envs:
@@ -262,3 +275,4 @@ x-casaos:
           
 volumes:
   postgresql_data:
+  
