@@ -4,17 +4,17 @@ version: '2'
 services:
   onlyoffice-documentserver:
     container_name: onlyoffice-documentserver
-    image: onlyoffice/documentserver
+    image: onlyoffice/documentserver:latest
     depends_on:
       - onlyoffice-postgresql
       - onlyoffice-rabbitmq
     environment:
       - DB_TYPE=postgres
-      - DB_HOST=onlyoffice-postgresql
+      - DB_HOST=localhost
       - DB_PORT=5432
       - DB_NAME=onlyoffice
       - DB_USER=onlyoffice
-      - AMQP_URI=amqp://guest:guest@onlyoffice-rabbitmq
+      - AMQP_URI=amqp://guest:guest@localhost
       - JWT_ENABLED=true
       - JWT_SECRET=secret
       - JWT_HEADER=Authorization
@@ -41,13 +41,10 @@ services:
     - type: bind
       source: /DATA/AppData/onlyoffice/DocumentServer/lib/documentserver/App_Data/cache/files
       target: /var/lib/onlyoffice/documentserver/App_Data/cache/files
-    - type: bind
-      source: /usr/share/fonts
-      target: /usr/share/fonts
-       
+
   onlyoffice-rabbitmq:
     container_name: onlyoffice-rabbitmq
-    image: rabbitmq
+    image: rabbitmq:latest
     restart: always
     expose:
       - '5672'
@@ -62,10 +59,6 @@ services:
     restart: always
     expose:
       - '5432'
-    volumes:
-    - type: volume
-      source: postgresql_data
-      target: /var/lib/postgresql
 
     x-casaos:
       envs:
@@ -73,181 +66,220 @@ services:
         description: 
           en_us: Set to "true" (without quotes) to enable JSON Web Token validation.
           es_es: Establecer a "true" (sin comillas) para habilitar la validación token web JSON.
+          zh_cn: 设置为“true”（不带引号）以启用JSON Web令牌验证。
 
       - container: ONLYOFFICE_HTTPS_HSTS_ENABLED
         description: 
           en_us: Advanced configuration option for turning off the HSTS configuration. Applicable only when SSL is in use. Defaults to `true`.
           es_es: Opción de configuración avanzada para desactivar la configuración HSTS. Aplicable solo cuando SSL está en uso. El valor predeterminado es `true`.
+          zh_cn: 用于关闭HSTS配置的高级配置选项。仅在使用SSL时适用。默认为`true`。
 
       - container: ONLYOFFICE_HTTPS_HSTS_MAXAGE
         description: 
           en_us: Advanced configuration option for setting the HSTS max-age in the onlyoffice NGINX vHost configuration. Applicable only when SSL is in use. Defaults to `31536000`.
           es_es: Opción de configuración avanzada para establecer la edad máxima de HSTS en la configuración de vHost NGINX de onlyoffice. Aplicable solo cuando SSL está en uso. El valor predeterminado es `31536000`.
+          zh_cn: 用于在onlyoffice NGINX vHost配置中设置HSTS最大有效期的高级配置选项。仅在使用SSL时适用。默认为`31536000`。
 
       - container: SSL_CERTIFICATE_PATH
         description: 
           en_us: The path to the SSL certificate to use. Defaults to `/var/www/onlyoffice/Data/certs/tls.crt`.
           es_es: La ruta al certificado SSL a utilizar. El valor predeterminado es `/var/www/onlyoffice/Data/certs/tls.crt`.
+          zh_cn: 要使用的SSL证书的路径。默认为`/var/www/onlyoffice/Data/certs/tls.crt`。
 
       - container: SSL_KEY_PATH
         description: 
           en_us: The path to the SSL certificate private key. Defaults to `/var/www/onlyoffice/Data/certs/tls.key`.
           es_es: La ruta a la clave privada del certificado SSL. El valor predeterminado es `/var/www/onlyoffice/Data/certs/tls.key`.
+          zh_cn: SSL证书私钥的路径。默认为`/var/www/onlyoffice/Data/certs/tls.key`。
 
       - container: SSL_DHPARAM_PATH
         description: 
           en_us: The path to the Diffie-Hellman parameter. Defaults to `/var/www/onlyoffice/Data/certs/dhparam.pem`.
           es_es: La ruta al parámetro Diffie-Hellman. El valor predeterminado es `/var/www/onlyoffice/Data/certs/dhparam.pem`.
+          zh_cn: Diffie-Hellman参数的路径。默认为`/var/www/onlyoffice/Data/certs/dhparam.pem`。
 
       - container: SSL_VERIFY_CLIENT
         description: 
           en_us: Enable verification of client certificates using the `CA_CERTIFICATES_PATH` file. Defaults to `false`.
           es_es: Habilitar la verificación de los certificados de cliente utilizando el archivo `CA_CERTIFICATES_PATH`. El valor predeterminado es `false`.
+          zh_cn: 使用`CA_CERTIFICATES_PATH`文件启用客户端证书的验证。默认为`false`。
 
       - container: DB_TYPE
         description: 
           en_us: The database type. Supported values are `postgres`, `mariadb` or `mysql`. Defaults to `postgres`.
           es_es: El tipo de base de datos. Los valores admitidos son `postgres`, `mariadb` o `mysql`. El valor predeterminado es `postgres`.
+          zh_cn: 数据库类型。支持的值为`postgres`，`mariadb`或`mysql`。默认为`postgres`。
 
       - container: DB_HOST
         description: 
           en_us: The IP address or the name of the host where the database server is running.
           es_es: La dirección IP o el nombre del host donde se ejecuta el servidor de la base de datos.
+          zh_cn: 数据库服务器运行的IP地址或主机名。
 
       - container: DB_PORT
         description: 
           en_us: The database server port number.
           es_es: El número de puerto del servidor de la base de datos.
+          zh_cn: 数据库服务器端口号。
 
       - container: DB_NAME
         description: 
           en_us: The name of a database to be created on the image startup.
           es_es: El nombre de una base de datos que se creará al iniciar la imagen.
+          zh_cn: 在启动镜像时要创建的数据库的名称。
 
       - container: DB_USER
         description: 
           en_us: The new user name with superuser permissions for the database account.
           es_es: El nuevo nombre de usuario con permisos de superusuario para la cuenta de la base de datos.
+          zh_cn: 具有数据库帐户的超级用户权限的新用户名。
 
       - container: DB_PWD
         description: 
           en_us: The password set for the database account.
           es_es: La contraseña para la cuenta de la base de datos.
+          zh_cn: 为数据库帐户设置的密码。
 
       - container: AMQP_URI
         description: 
           en_us: The AMQP URI to connect to the message broker server.
           es_es: El URI de AMQP para conectarse al servidor del intermediario de mensajes.
+          zh_cn: 用于连接到消息代理服务器的AMQP URI。
 
       - container: AMQP_TYPE
         description: 
           en_us: The message broker type. Supported values are `rabbitmq` or `activemq`. Defaults to `rabbitmq`.
           es_es: El tipo de intermediario de mensajes. Los valores admitidos son `rabbitmq` o `activemq`. El valor predeterminado es `rabbitmq`.
+          zh_cn: 消息代理类型。支持的值为`rabbitmq`或`activemq`。默认为`rabbitmq`。
 
       - container: REDIS_SERVER_HOST
         description: 
           en_us: The IP address or the name of the host where the Redis server is running.
           es_es: La dirección IP o el nombre del host donde se ejecuta el servidor Redis.
+          zh_cn: Redis服务器运行的IP地址或主机名。
 
       - container: REDIS_SERVER_PORT
         description: 
           en_us: The Redis server port number.
           es_es: El número de puerto del servidor Redis.
+          zh_cn: Redis服务器端口号。
 
       - container: NGINX_WORKER_PROCESSES
         description: 
           en_us: Defines the number of NGINX worker processes.
           es_es: Define el número de procesos de trabajo de NGINX.
+          zh_cn: 定义NGINX工作进程的数量。
 
       - container: NGINX_WORKER_CONNECTIONS
         description: 
           en_us: Sets the maximum number of simultaneous connections that can be opened by a NGINX worker process.
           es_es: Establece el número máximo de conexiones simultáneas que puede abrir un proceso de trabajo de NGINX.
+          zh_cn: 设置可以由NGINX工作进程打开的最大同时连接数。
 
       - container: SECURE_LINK_SECRET
         description: 
           en_us: Defines secret for the nginx config directive secure_link_md5. Defaults to `random string`.
           es_es: Define el secreto para el directorio de configuración de nginx secure_link_md5. El valor predeterminado es `random string`.
+          zh_cn: 定义nginx配置指令secure_link_md5的秘密。默认为`random string`。
 
       - container: JWT_ENABLED
         description: 
           en_us: Specifies the enabling the JSON web token validation by ONLYOFFICE Docs. Defaults to `true`.
           es_es: Especifica la habilitación de la validación del token web JSON por parte de ONLYOFFICE Docs. El valor predeterminado es `true`.
+          zh_cn: 指定启用ONLYOFFICE Docs的JSON Web令牌验证。默认为`true`。
 
       - container: JWT_SECRET
         description: 
           en_us: Defines the secret key to validate the JSON web token in the request to ONLYOFFICE Docs. Defaults to random value.
           es_es: Define la clave secreta para validar el token web JSON en la solicitud a ONLYOFFICE Docs. Predeterminado a valor aleatorio.
+          zh_cn: 定义用于验证请求中的JSON Web令牌的秘密密钥。默认为随机值。
 
       - container: JWT_HEADER
         description: 
           en_us: Defines the HTTP header that will be used to send the JSON web token. Defaults to `Authorization`
           es_es: Define el encabezado HTTP que se usará para enviar el token web JSON. El valor predeterminado es `Authorization`
+          zh_cn: 定义将用于发送JSON Web令牌的HTTP标头。默认为`Authorization`
 
       - container: JWT_ENABLED
         description: 
           en_us: Specifies the enabling the JSON web token validation by ONLYOFFICE Docs. Defaults to `true`.
           es_es: Especifica la habilitación de la validación del token web JSON por parte de ONLYOFFICE Docs. El valor predeterminado es `true`.
+          zh_cn: 指定启用ONLYOFFICE Docs的JSON Web令牌验证。默认为`true`.
 
       - container: WOPI_ENABLED
         description: 
           en_us: Specifies the enabling the wopi handlers. Defaults to `false`.
           es_es: Especifica la habilitación de los controladores wopi. El valor predeterminado es `false`.
+          zh_cn: 指定启用wopi处理程序。默认为`false`。
 
       - container: USE_UNAUTHORIZED_STORAGE
         description: 
           en_us: Set to `true` if using self-signed certificates for your storage server, e.g. Nextcloud. Defaults to `false`.
           es_es: Establecer a `true` si utiliza certificados autofirmados para su servidor de almacenamiento, ej. Nextcloud. El valor predeterminado es `false`.
+          zh_cn: 如果为存储服务器（例如Nextcloud）使用自签名证书，请设置为`true`。默认为`false`。
 
       - container: GENERATE_FONTS
         description: 
           en_us: When `true`, regenerates fonts list and the fonts thumbnails etc. at each start. Defaults to `true`.
           es_es: Cuando es `true`, regenera la lista de fuentes, miniaturas de las fuentes, etc. en cada inicio. El valor predeterminado es `true`.
+          zh_cn: 当`true`时，每次启动时都会重新生成字体列表和字体缩略图等。默认为`true`。
 
       - container: METRICS_ENABLED
         description: 
           en_us: Specifies the enabling StatsD for ONLYOFFICE Docs. Defaults to `false`.
           es_es: Especifica la habilitación de StatsD para ONLYOFFICE Docs. El valor predeterminado es `false`.
+          zh_cn: 指定启用ONLYOFFICE Docs的StatsD。默认为`false`。
 
       - container: METRICS_HOST
         description: 
           en_us: Defines StatsD listening host. Defaults to `localhost`.
           es_es: Define el host de escucha de StatsD. El valor predeterminado es `localhost`.
+          zh_cn: 定义StatsD监听主机。默认为`localhost`。
 
       - container: METRICS_PORT
         description: 
           en_us: Defines StatsD listening port. Defaults to `8125`.
           es_es: Define el puerto de escucha de StatsD. El valor predeterminado es `8125`.
+          zh_cn: 定义StatsD监听端口。默认为`8125`。
 
       - container: METRICS_PREFIX
         description: 
           en_us: Defines StatsD metrics prefix for backend services. Defaults to `ds`.
           es_es: Define el prefijo de métricas de StatsD para los servicios de backend. El valor predeterminado es `ds`.
+          zh_cn: 为后端服务定义StatsD指标前缀。默认为`ds`。
 
       - container: LETS_ENCRYPT_DOMAIN
         description: 
           en_us: Defines the domain for Let's Encrypt certificate.
           es_es: Define el dominio para el certificado Let's Encrypt.
+          zh_cn: 定义Let's Encrypt证书的域。
 
       - container: LETS_ENCRYPT_MAIL
         description: 
           en_us: Defines the domain administrator mail address for Let's Encrypt certificate.
           es_es: Define la dirección de correo del administrador del dominio para el certificado Let's Encrypt.
+          zh_cn: 为Let's Encrypt证书定义域管理员邮件地址。
 
       ports:
         - container: "8090"
           description:
             en_us: WebUI HTTP Port
+            es_es: Puerto HTTP de la interfaz web
+            zh_cn: WebUI HTTP端口
           protocol: tcp
 
         - container: "5672"
           description:
             en_us: OnlyOffice rabbitmq Port
+            es_es: Puerto de OnlyOffice rabbitmq
+            zh_cn: OnlyOffice rabbitmq端口
           protocol: tcp
 
         - container: "5432"
           description:
             en_us: OnlyOffice postgresql Port
+            es_es: Puerto de OnlyOffice postgresql
+            zh_cn: OnlyOffice postgresql端口
           protocol: tcp
 
 x-casaos:
@@ -261,18 +293,16 @@ x-casaos:
   description:
     en_us: ONLYOFFICE Document Server is an online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats .docx, .xlsx, .pptx and enabling collaborative editing in real time.
     es_es: ONLYOFFICE Document Server es una suite ofimática en línea que incluye visores y editores de textos, hojas de cálculo y presentaciones, totalmente compatible con los formatos Office Open XML .docx, .xlsx, .pptx y que permite la edición colaborativa en tiempo real.
+    zh_cn: ONLYOFFICE Document Server是一个在线办公套件，包括文本、电子表格和演示文稿的查看器和编辑器，完全兼容Office Open XML格式.docx、.xlsx、.pptx，并支持实时协作编辑。
   developer: ONLYOFFICE
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OnlyOffice/icon.png
   tagline:
     en_us: Easy to use document server for the OnlyOffice office suite.
     es_es: Servidor de documentos fácil de usar para la suite ofimática OnlyOffice.
+    zh_cn: 用于OnlyOffice办公套件的易于使用的文档服务器。
   tips: {}
   title:
-    en_us: OnlyOffice Document Server
+    en_us: OnlyOffice
   index: /
   scheme: http
   port_map: "8090"
-          
-volumes:
-  postgresql_data:
-  
