@@ -291,18 +291,18 @@ x-casaos:
   author: Chàra Rose
   category: Cloud
   description:
-    en_us: ONLYOFFICE Document Server is an online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats .docx, .xlsx, .pptx and enabling collaborative editing in real time.
-    es_es: ONLYOFFICE Document Server es una suite ofimática en línea que incluye visores y editores de textos, hojas de cálculo y presentaciones, totalmente compatible con los formatos Office Open XML .docx, .xlsx, .pptx y que permite la edición colaborativa en tiempo real.
-    zh_cn: ONLYOFFICE Document Server是一个在线办公套件，包括文本、电子表格和演示文稿的查看器和编辑器，完全兼容Office Open XML格式.docx、.xlsx、.pptx，并支持实时协作编辑。
+    en_us: ONLYOFFICE is an online office suite that includes text, spreadsheet and presentation viewers and editors, fully compatible with Office Open XML formats .docx, .xlsx, .pptx and supporting real-time collaborative editing. This app is an instance of ONLYOFFICE Document Server, which includes examples, a document conversion interface, a document editor interface and components.
+    es_es: ONLYOFFICE es una suite de oficina en línea que incluye visores y editores de texto, hojas de cálculo y presentaciones, totalmente compatibles con los formatos Office Open XML .docx, .xlsx, .pptx y con soporte para edición colaborativa en tiempo real. Esta aplicación es una instancia de ONLYOFFICE Document Server, que incluye ejemplos, una interfaz de conversión de documentos, una interfaz de editor de documentos y componentes.
+    zh_cn: ONLYOFFICE是一个在线办公套件，包括文本、电子表格和演示文稿的查看器和编辑器，完全兼容Office Open XML格式.docx、.xlsx、.pptx，并支持实时协作编辑。这个App是一个ONLYOFFICE Document Server的实例，包含了example示例、文档转换接口、文档编辑器接口和组件。
   developer: ONLYOFFICE
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OnlyOffice/icon.png
+  icon: https://static-www.onlyoffice.com/v9.5.0/images/favicons01/favicon64.png
   tagline:
-    en_us: Easy to use document server for the OnlyOffice office suite.
-    es_es: Servidor de documentos fácil de usar para la suite ofimática OnlyOffice.
-    zh_cn: 用于OnlyOffice办公套件的易于使用的文档服务器。
+    en_us: Document Server API and components for the OnlyOffice office suite.
+    es_es: API y componentes del servidor de documentos para la suite de oficina OnlyOffice.
+    zh_cn: 用于OnlyOffice办公套件的文档服务器接口和组件。
   tips: {}
   title:
-    en_us: OnlyOffice
+    en_us: OnlyOffice Document Server
   index: /
   scheme: http
   port_map: "8090"
